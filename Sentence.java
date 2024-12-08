@@ -7,20 +7,22 @@ public class Sentence {
 
     public Sentence(String sentence) {
         words = new ArrayList<>();
-        String[] parts = sentence.split("\\s+");
-        punctuation = sentence.charAt(sentence.length() - 1);
+        sentence = sentence.trim();
+        punctuation = extractPunctuation(sentence);
 
-        for (int i = 0; i < parts.length; i++) {
-            if (i == parts.length - 1 && isPunctuation(parts[i])) {
-                punctuation = parts[i].charAt(0);
-            } else {
-                words.add(new Word(parts[i]));
+        String[] parts = sentence.replaceAll("[.!?]", "").split("\\s+");
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                words.add(new Word(part));
             }
         }
     }
 
-    private boolean isPunctuation(String part) {
-        return part.matches("[.!?]");
+    private char extractPunctuation(String sentence) {
+        if (sentence.endsWith(".") || sentence.endsWith("!") || sentence.endsWith("?")) {
+            return sentence.charAt(sentence.length() - 1);
+        }
+        return ' '; 
     }
 
     public List<Word> getWords() {
@@ -37,7 +39,9 @@ public class Sentence {
         for (Word word : words) {
             builder.append(word).append(" ");
         }
-        builder.append(punctuation);
+        if (punctuation != ' ') {
+            builder.append(punctuation);
+        }
         return builder.toString().trim();
     }
 }
