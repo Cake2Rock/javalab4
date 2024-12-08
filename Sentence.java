@@ -36,12 +36,15 @@ public class Sentence {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for (Word word : words) {
-            builder.append(word).append(" ");
+        for (int i = 0; i < words.size(); i++) {
+            builder.append(words.get(i));
+            if (i < words.size() - 1) {
+                builder.append(" "); 
         }
         if (punctuation != ' ') {
-            builder.append(punctuation);
+            builder.append(punctuation); 
         }
         return builder.toString().trim();
     }
+    
 }
