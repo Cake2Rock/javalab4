@@ -4,6 +4,7 @@ import java.util.List;
 public class Text {
     private List<Sentence> sentences;
 
+    // Constructor to parse text into sentences
     public Text(String text) {
         sentences = new ArrayList<>();
         String[] splitSentences = text.split("(?<=[.!?])\\s+");
